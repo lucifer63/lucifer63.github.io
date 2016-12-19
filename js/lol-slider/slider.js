@@ -112,10 +112,10 @@
 	    	get = options.repeat_slides ? 
 				function(i) {
 					while ( i < 0 ) {
-						i += arr.length;
+						i += slides_arr.length;
 					}
-					while ( i >= arr.length ) {
-						i -= arr.length;
+					while ( i >= sliders_arr.length ) {
+						i -= slides_arr.length;
 					}
 					return i;
 				} : 
