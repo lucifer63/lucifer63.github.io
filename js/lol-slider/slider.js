@@ -121,7 +121,7 @@
 			    });
 			}
 
-			if (options.callbacks.beforeChange) {
+			if (options.callbacks && options.callbacks.beforeChange) {
 				addAction( options.callbacks.beforeChange, changeTo_additional_actions.before );
 			}
 
@@ -179,7 +179,7 @@
 		    	})
 		    }
 
-			if (options.callbacks.afterChange) {
+			if (options.callbacks && options.callbacks.afterChange) {
 				addAction( options.callbacks.afterChange, changeTo_additional_actions.after );
 			}
 
