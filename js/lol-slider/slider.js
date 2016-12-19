@@ -344,7 +344,7 @@
 		    // DRAFT!!! Change to some adequate solution
 		    // console.log(map_items.filter('.active'));
 
-			sliderResizeHandler = function() {
+			/*sliderResizeHandler = function() {
 			    var pre = base.outerWidth(), after = 0;
 				slides.hide();
 				list.width('auto');
@@ -359,7 +359,7 @@
 			$( window ).on('resize', function() {
 				sliderResizeHandler();
 				setTimeout(sliderResizeHandler, 250);
-			});
+			});*/
 
 			if (map_items.filter('.active').length) {
 				changeTo(map_items.index( map_items.filter('.active') ))
