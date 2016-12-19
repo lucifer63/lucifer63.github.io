@@ -107,7 +107,13 @@
 			    });
 			}
 
-			options.callbacks && options.callbacks.beforeChange && changeTo_additional_actions.before.push(options.callbacks.beforeChange);
+			if (options.callbacks && options.callbacks.beforeChange) {
+				if (typeof options.callbacks.beforeChange === 'function') {
+					changeTo_additional_actions.before.push(options.callbacks.beforeChange);	
+				} else if (options.callbacks.beforeChange instanceof Array) {
+					changeTo_additional_actions.before.concat(options.callbacks.beforeChange)
+				}
+			}
 
 	    	get = options.repeat_slides ? 
 				function(i) {
@@ -163,8 +169,14 @@
 		    	})
 		    }
 
-			options.callbacks && options.callbacks.afterChange && changeTo_additional_actions.after.push(options.callbacks.afterChange);
-			
+			if (options.callbacks && options.callbacks.afterChange) {
+				if (typeof options.callbacks.afterChange === 'function') {
+					changeTo_additional_actions.before.push(options.callbacks.afterChange);	
+				} else if (options.callbacks.afterChange instanceof Array) {
+					changeTo_additional_actions.before.concat(options.callbacks.afterChange)
+				}
+			}
+
 			changeTo = function(target) {
 				var from = current, 
 					to = get( target );
