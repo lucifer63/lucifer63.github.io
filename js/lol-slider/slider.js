@@ -27,7 +27,6 @@
 			})();
 		}
 
-		// slider construction beginning
 	    var options = $.extend(true, {
 	    	touch_control: false,
 	    	repeat_slides: true,
