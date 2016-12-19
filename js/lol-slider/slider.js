@@ -31,19 +31,33 @@
 	    	touch_control: false,
 	    	repeat_slides: true,
 	    	autoplay: false,
-	    	autoplay_delay: 5,
+	    	autoplay_delay: 5000,
 	    	change_thresold: 10,
-	    	control_overlay_selector: 'slider-control-overlay'
+	    	control_overlay_selector: '.slider-control-overlay'
 	    }, opt);
 
 	    // change_thresold - minimal distance in percentage of the slider width that user should move slide at to change it
-		if (typeof options.change_thresold !== 'number' && options.change_thresold < 0 || options.change_thresold > 100) {
-			console.log('Invalid \'change_thresold\' value: it is \'' + options.change_thresold + '\', but expected to be a number greater than 0 and lesser than 100. Slider can be created with default thresold value - 10% !');
+		if (typeof options.change_thresold !== 'number' || (options.change_thresold < 0 || options.change_thresold >= 100)) {
+			console.log('Invalid \'change_thresold\' value: it is \'' + options.change_thresold + '\', but expected to be a number greater than 0 and lesser than 100. Slider can be created with default thresold value of 10');
 			options.change_thresold = 10;
 		}
 
 		if (return_object) {
 			console.log('An object should get returned, but its not yet ready, lol');
+		}
+
+		if (options.callbacks && Object.keys(options.callbacks).length) {
+			function addAction(src, dest) {
+				if (typeof src === 'function') {
+					dest.push(src);	
+				} else if (src instanceof Array) {
+					src.forEach(function(f) {
+						if (typeof f === 'function') {
+							dest.push(f);
+						}
+					})
+				}
+			}	
 		}
 
 	    return this.each(function () {
@@ -73,7 +87,7 @@
 	    	}
 
 	    	if (!control_overlay.length) {
-	    		control_overlay = $('<div class="' + options.control_overlay_selector + '"></div>');
+	    		control_overlay = $('<div class="' + options.control_overlay_selector.substr(1) + '"></div>');
 	    		base.prepend( control_overlay );
 	    	}
 
@@ -107,12 +121,8 @@
 			    });
 			}
 
-			if (options.callbacks && options.callbacks.beforeChange) {
-				if (typeof options.callbacks.beforeChange === 'function') {
-					changeTo_additional_actions.before.push(options.callbacks.beforeChange);	
-				} else if (options.callbacks.beforeChange instanceof Array) {
-					changeTo_additional_actions.before.concat(options.callbacks.beforeChange)
-				}
+			if (options.callbacks.beforeChange) {
+				addAction( options.callbacks.beforeChange, changeTo_additional_actions.before );
 			}
 
 	    	get = options.repeat_slides ? 
@@ -153,7 +163,7 @@
 			}
 		    if ( map_items.length ) {
 		    	if ( map_items.length !== slides_arr.length ) {
-		    		console('Warning: the amount of map items is not equal to amount of slides in the specified slider container: ', base);
+		    		console.log('Warning: the amount of map items is not equal to amount of slides in the specified slider container: ', base);
 		    	}
 		    	map_items.each(function(i, el) {
 		    		$( el ).on('click', function() {
@@ -169,12 +179,8 @@
 		    	})
 		    }
 
-			if (options.callbacks && options.callbacks.afterChange) {
-				if (typeof options.callbacks.afterChange === 'function') {
-					changeTo_additional_actions.before.push(options.callbacks.afterChange);	
-				} else if (options.callbacks.afterChange instanceof Array) {
-					changeTo_additional_actions.before.concat(options.callbacks.afterChange)
-				}
+			if (options.callbacks.afterChange) {
+				addAction( options.callbacks.afterChange, changeTo_additional_actions.after );
 			}
 
 			changeTo = function(target) {
@@ -381,7 +387,7 @@
 				setAutoplay = function() {
 					autoplay_interval_id = setInterval(function() {
 						changeTo(current + 1);
-					}, parseFloat( options.autoplay_delay )*1000)
+					}, parseFloat( options.autoplay_delay ))
 				}
 
 				setAutoplay();
