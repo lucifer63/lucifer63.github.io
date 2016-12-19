@@ -87,19 +87,16 @@
 
 		    if (arrows.length) {
 			    arrows.each(function() {
-					var direction;
+					var direction, $arrow = $( this );
 
-					$.each($( this ).attr('class').split(' '), function(i, class_name) {
-						if (class_name.indexOf('-back') !== -1) {
-							direction = -1;
-						} else if (class_name.indexOf('-forward') !== -1) {
-							direction = 1;
-						}
-						return false;
-					});
+					if ($arrow.hasClass('slider-arrow-back')) {
+						direction = -1;
+					} else if ($arrow.hasClass('slider-arrow-forward')) {
+						direction = 1;
+					}
 
 					if (direction) {
-						$( this ).on('click', (function(dir) {
+						$arrow.on('click', (function(dir) {
 							return function() {
 								changeTo(current + dir);
 							};
