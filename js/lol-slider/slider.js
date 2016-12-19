@@ -114,7 +114,7 @@
 					while ( i < 0 ) {
 						i += slides_arr.length;
 					}
-					while ( i >= sliders_arr.length ) {
+					while ( i >= slides_arr.length ) {
 						i -= slides_arr.length;
 					}
 					return i;
