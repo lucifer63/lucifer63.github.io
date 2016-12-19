@@ -110,14 +110,15 @@
 			options.callbacks && options.callbacks.beforeChange && changeTo_additional_actions.before.push(options.callbacks.beforeChange);
 
 	    	get = options.repeat_slides ? 
-		    	function(i) {
-		    		if ( i<0 ) {
-		    			return get( i += slides_arr.length );
-		    		} else if (i >= slides_arr.length ) {
-		    			return get( i -= slides_arr.length );
-		    		}
-		    		return i;
-		    	} : 
+				function(i) {
+					while ( i < 0 ) {
+						i += arr.length;
+					}
+					while ( i >= arr.length ) {
+						i -= arr.length;
+					}
+					return i;
+				} : 
 		    	function(i) {
 		    		if ( i === slides_arr.length || i === -1 ) {
 		    			return current;
