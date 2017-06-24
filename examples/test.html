@@ -1,0 +1,51 @@
+<!DOCTYPE>
+<html charset="utf-8">
+<head>
+	<title>Calculator</title>
+	<style>
+		.inactive {
+			pointer-events: none;
+			opacity: 0.5;
+		}
+	</style>
+</head>
+<body>
+	<button class="calc-open">Open calculator</button>
+
+	<p class="calc-ui inactive">
+		<span>Control elements in this block will be available when a child window calculator gets initiated.</span><br>
+		<button class="calc-eval">Evaluate</button>
+	</p>
+
+	<script>
+		var calc_url = "https://lucifer63.github.io/examples/calc/index.html";
+
+		document.getElementsByClassName('calc-open')[0].addEventListener('click', openCalcWindow);
+
+		function openCalcWindow() {
+			var w = window.open(calc_url, "_blank", "height=500,width=450,resizable=yes");
+			w.document.title = "Calculator";
+		}
+
+		var listeners = {
+			calc: {
+				init: function(data) {
+					document.getElementsByClassName('calc-ui')[0].classList.remove('inactive');
+					document.getElementsByClassName('calc-eval').addEventListener('click', data.instance.evaluate);
+				}
+			}
+		}
+
+		window.addEventListener('message', function(custom_event) { 
+			if (custom_event.origin === calc_url) {
+				console.log('got!');
+				return;
+				try {
+					listeners[ custom_event.caller ][ custom_event.event ]( custom_event.data );
+				} catch (e) {}
+			} else { 
+				return;
+			} 
+		});
+	</script>
+</body>
