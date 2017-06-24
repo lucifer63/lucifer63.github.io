@@ -18,38 +18,37 @@
 	</p>
 
 	<script>
+		(function() {
+			const origin = 'https://lucifer63.github.io';
 
-(function() {
-	const origin = 'https://lucifer63.github.io';
+			document.getElementsByClassName('calc-open')[0].addEventListener('click', openCalcWindow);
 
-	document.getElementsByClassName('calc-open')[0].addEventListener('click', openCalcWindow);
-
-	function openCalcWindow() {
-		var w = window.open("index.html", "_blank", "height=500,width=450,resizable=yes");
-		w.document.title = "Calculator";
-	}
-
-	var listeners = {
-		calc: {
-			init: function(data) {
-				document.getElementsByClassName('calc-ui')[0].classList.remove('inactive');
-				document.getElementsByClassName('calc-eval').addEventListener('click', data.instance.evaluate);
+			function openCalcWindow() {
+				var w = window.open("index.html", "_blank", "height=500,width=450,resizable=yes");
+				w.document.title = "Calculator";
 			}
-		}
-	}
 
-	window.addEventListener('message', function(custom_event) { 
-			console.log('got!1', custom_event.origin);
-		if (custom_event.origin === origin) {
-			console.log('got!2');
-			return;
-			try {
-				listeners[ custom_event.caller ][ custom_event.event ]( custom_event.data );
-			} catch (e) {}
-		} else { 
-			return;
-		} 
-	});
-})
+			var listeners = {
+				calc: {
+					init: function(data) {
+						document.getElementsByClassName('calc-ui')[0].classList.remove('inactive');
+						document.getElementsByClassName('calc-eval').addEventListener('click', data.instance.evaluate);
+					}
+				}
+			}
+
+			window.addEventListener('message', function(custom_event) { 
+					console.log('got!1', custom_event.origin);
+				if (custom_event.origin === origin) {
+					console.log('got!2');
+					return;
+					try {
+						listeners[ custom_event.caller ][ custom_event.event ]( custom_event.data );
+					} catch (e) {}
+				} else { 
+					return;
+				} 
+			});
+		})();
 	</script>
 </body>
