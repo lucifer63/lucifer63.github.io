@@ -1,17 +1,10 @@
 (function() {
-	const origin = 'https://lucifer63.github.io';
-
 	document.addEventListener("DOMContentLoaded", initCalc);
 
 	function initCalc() {
 		var calc = new Calculator( document.getElementById('calculator') );
+		window.evaluateCalc = calc.evaluate;
 
-			opener.postMessage({ 
-				caller: 'calc',
-				event: 'init',
-				data: 'asd'
-			}, origin); 
-		try {
-		} catch (error) {}
+		opener.initCalc();
 	}
 })();

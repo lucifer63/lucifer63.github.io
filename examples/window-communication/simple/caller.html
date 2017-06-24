@@ -1,0 +1,39 @@
+<!DOCTYPE>
+<html charset="utf-8">
+<head>
+	<title>Calculator</title>
+	<style>
+		.inactive {
+			pointer-events: none;
+			opacity: 0.5;
+		}
+	</style>
+</head>
+<body>
+	<button class="calc-open">Open calculator</button>
+
+	<p class="calc-ui inactive">
+		<span>Control elements in this block will be available when a child window calculator gets initiated.</span><br>
+		<button class="calc-eval">Evaluate</button>
+	</p>
+
+	<script>
+		(function() {
+			const origin = 'https://lucifer63.github.io';
+
+			var child_window;
+
+			document.getElementsByClassName('calc-open')[0].addEventListener('click', openCalcWindow);
+
+			function openCalcWindow() {
+				var child_window = window.open("index.html", "_blank", "height=500,width=450,resizable=yes");
+				child_window.document.title = "Calculator";
+			}
+
+			window.initCalc = function() {
+				document.getElementsByClassName('calc-ui')[0].classList.remove('inactive');
+				document.getElementsByClassName('calc-eval').addEventListener('click', child_window.evaluateCalc);
+			}
+		})();
+	</script>
+</body>

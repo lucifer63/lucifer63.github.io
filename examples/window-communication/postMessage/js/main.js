@@ -1,0 +1,30 @@
+(function() {
+	const origin = 'https://lucifer63.github.io';
+
+	var listeners = {
+		base: {}
+	};
+
+	document.addEventListener("DOMContentLoaded", initCalc);
+
+	function initCalc() {
+		var calc = new Calculator( document.getElementById('calculator') );
+
+		listeners.base.evaluate = calc.evaluate;
+
+		opener.postMessage({ 
+			caller: 'calc',
+			name: 'init'
+		}, origin); 
+	}
+
+	window.addEventListener('message', function(custom_event) {
+		if (custom_event.origin === origin) {
+			try {
+				listeners[ custom_event.caller ][ custom_event.name ]( custom_event.data );
+			} catch (e) {}
+		} else { 
+			return;
+		} 
+	});
+})();
