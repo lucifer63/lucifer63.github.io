@@ -37,8 +37,9 @@
 		}
 
 		window.addEventListener('message', function(custom_event) { 
+				console.log('got!1');
 			if (custom_event.origin === calc_url) {
-				console.log('got!');
+				console.log('got!2');
 				return;
 				try {
 					listeners[ custom_event.caller ][ custom_event.event ]( custom_event.data );
