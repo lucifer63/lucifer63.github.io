@@ -4,12 +4,11 @@ document.addEventListener("DOMContentLoaded", initCalc);
 
 function initCalc() {
 	var calc = new Calculator( document.getElementById('calculator') );
+
 		opener.postMessage({ 
 			caller: 'calc',
 			event: 'init',
-			data: {
-				instance: calc
-			}
+			data: 'asd'
 		}, caller_url); 
 	try {
 	} catch (error) {}
