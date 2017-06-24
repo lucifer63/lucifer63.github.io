@@ -78,6 +78,7 @@
 
 	Calculator.prototype = {
 		evaluate: function() {
+			this.inputVal = this.input.innerHTML;
 			var equation = this.inputVal;
 			var lastChar = equation[equation.length - 1];
 			

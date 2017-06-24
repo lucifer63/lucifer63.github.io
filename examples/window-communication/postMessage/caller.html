@@ -23,24 +23,24 @@
 
 			var child_window,
 				listeners = {
-					calc: {}
+					calc: {
+						init: function(data) {
+							document.getElementsByClassName('calc-ui')[0].classList.remove('inactive');
+							document.getElementsByClassName('calc-eval')[0].addEventListener('click', function() {
+								child_window.postMessage({
+									caller: 'base',
+									name: 'evaluate'
+								}, origin)
+							});
+						}
+					}
 				};
 
 			document.getElementsByClassName('calc-open')[0].addEventListener('click', openCalcWindow);
 
 			function openCalcWindow() {
-				var child_window = window.open("index.html", "_blank", "height=500,width=450,resizable=yes");
+				child_window = window.open("index.html", "_blank", "height=500,width=450,resizable=yes");
 				child_window.document.title = "Calculator";
-
-				listeners.calc.init = function(data) {
-					document.getElementsByClassName('calc-ui')[0].classList.remove('inactive');
-					document.getElementsByClassName('calc-eval')[0].addEventListener('click', function() {
-						child_window.postMessage({
-							caller: 'base',
-							name: 'evaluate'
-						}, origin)
-					});
-				}
 			}
 
 			window.addEventListener('message', function(custom_event) {

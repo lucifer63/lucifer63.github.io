@@ -3,7 +3,7 @@
 
 	function initCalc() {
 		var calc = new Calculator( document.getElementById('calculator') );
-		window.evaluateCalc = calc.evaluate;
+		window.evaluateCalc = calc.evaluate.bind(calc);
 
 		opener.initCalc();
 	}

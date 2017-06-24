@@ -10,7 +10,9 @@
 	function initCalc() {
 		var calc = new Calculator( document.getElementById('calculator') );
 
-		listeners.base.evaluate = calc.evaluate.bind(calc);
+		listeners.base.evaluate = function() {
+			calc.evaluate();
+		}
 
 		opener.postMessage({ 
 			caller: 'calc',

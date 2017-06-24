@@ -26,13 +26,13 @@
 			document.getElementsByClassName('calc-open')[0].addEventListener('click', openCalcWindow);
 
 			function openCalcWindow() {
-				var child_window = window.open("index.html", "_blank", "height=500,width=450,resizable=yes");
+				child_window = window.open("index.html", "_blank", "height=500,width=450,resizable=yes");
 				child_window.document.title = "Calculator";
 			}
 
 			window.initCalc = function() {
 				document.getElementsByClassName('calc-ui')[0].classList.remove('inactive');
-				document.getElementsByClassName('calc-eval').addEventListener('click', child_window.evaluateCalc);
+				document.getElementsByClassName('calc-eval')[0].addEventListener('click', child_window.evaluateCalc);
 			}
 		})();
 	</script>
