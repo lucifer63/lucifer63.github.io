@@ -4,7 +4,7 @@ function initCalc() {
 	var calc = new Calculator( document.getElementById('calculator') );
 	try {
 		opener.update({ 
-			name: 'calc',
+			caller: 'calc',
 			event: 'init',
 			data: {
 				instance: calc
