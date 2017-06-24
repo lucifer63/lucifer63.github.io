@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html charset="utf-8">
 <head>
-	<title>Calc caller</title>
+	<title>Calc caller (postMessage)</title>
 	<style>
 		.inactive {
 			pointer-events: none;
@@ -10,6 +10,13 @@
 	</style>
 </head>
 <body>
+	<p>This one uses <i>postMessage</i> method of <i>Window</i> object to communicate between windows: both parent and child windows has <i>message</i> event listeners attached to <i>window</i> which purpose is to evaluate needed function from <i>listeners</i> object depending on received data. This scheme has two security layers:
+		<ol>
+			<li>Sender window checks origin of a receiver window. Message gets sent only if receiver window is of the specified origin,</li>
+			<li>Receiver window gives you an opportunity to check sender' origin. It is optional: passed event has an <i>origin</i> attribute, you can ignore it if you want.</li>
+		</ol>
+	</p>
+
 	<button class="calc-open">Open calculator</button>
 
 	<p class="calc-ui inactive">

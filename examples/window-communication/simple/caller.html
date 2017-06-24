@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html charset="utf-8">
 <head>
-	<title>Calc caller</title>
+	<title>Calc caller (simple)</title>
 	<style>
 		.inactive {
 			pointer-events: none;
@@ -10,6 +10,8 @@
 	</style>
 </head>
 <body>
+	<p>This one uses hardcoded function references to communicate between windows: this (parent) window has an <i>initCalc</i> function declared which is evaluated on child window' <i>DOMContentLoaded</i> event. Child window has an <i>evaluateCalc</i> function declared which is evaluated when you click "Evaluate" button. That's it.</p>
+
 	<button class="calc-open">Open calculator</button>
 
 	<p class="calc-ui inactive">
