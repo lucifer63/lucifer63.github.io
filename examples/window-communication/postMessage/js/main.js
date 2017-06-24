@@ -20,9 +20,7 @@
 
 	window.addEventListener('message', function(custom_event) {
 		if (custom_event.origin === origin) {
-			try {
-				listeners[ custom_event.caller ][ custom_event.name ]( custom_event.data );
-			} catch (e) {}
+			listeners[ custom_event.caller ][ custom_event.name ]( custom_event.data );
 		} else { 
 			return;
 		} 
