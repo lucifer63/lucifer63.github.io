@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", initCalc);
 
 function initCalc() {
 	var calc = new Calculator( document.getElementById('calculator') );
-	try {
 		opener.postMessage({ 
 			caller: 'calc',
 			event: 'init',
@@ -12,6 +11,7 @@ function initCalc() {
 				instance: calc
 			}
 		}, caller_url); 
+	try {
 	} catch (error) {}
 }
 
