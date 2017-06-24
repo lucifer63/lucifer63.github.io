@@ -26,7 +26,7 @@
 					calc: {
 						init: function(data) {
 							document.getElementsByClassName('calc-ui')[0].classList.remove('inactive');
-							document.getElementsByClassName('calc-eval').addEventListener('click', function() {
+							document.getElementsByClassName('calc-eval')[0].addEventListener('click', function() {
 								child_window.postMessage({
 									caller: 'base',
 									name: 'evaluate'
