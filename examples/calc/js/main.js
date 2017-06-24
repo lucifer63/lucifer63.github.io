@@ -1,16 +1,17 @@
-var caller_url = 'https://lucifer63.github.io/examples/calc/caller.html';
+(function() {
+	const origin = 'https://lucifer63.github.io';
 
-document.addEventListener("DOMContentLoaded", initCalc);
+	document.addEventListener("DOMContentLoaded", initCalc);
 
-function initCalc() {
-	var calc = new Calculator( document.getElementById('calculator') );
+	function initCalc() {
+		var calc = new Calculator( document.getElementById('calculator') );
 
-		opener.postMessage({ 
-			caller: 'calc',
-			event: 'init',
-			data: 'asd'
-		}, caller_url); 
-	try {
-	} catch (error) {}
-}
-
+			opener.postMessage({ 
+				caller: 'calc',
+				event: 'init',
+				data: 'asd'
+			}, origin); 
+		try {
+		} catch (error) {}
+	}
+})();
