@@ -1,0 +1,61 @@
+<!DOCTYPE>
+<html charset="utf-8">
+<head>
+    <title>Bookmarklet generator</title>
+    <link rel="stylesheet" href="css/codemirror.css">
+    <link rel="stylesheet" href="css/docs.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="container">
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="code1">Put your code here </label>
+            <div class="controls"> 
+                <textarea id="code1" name="code">
+with (window) {
+    var preparationsDone,action;
+    if (!preparationsDone) {
+        rule = '*:not(body) { background: transparent !important; }';
+        try { document.styleSheets[0].insertRule(rule, 0); }
+        catch (e) {
+            css = document.createElement('style');
+            css.innerHTML = rule;
+            document.body.insertBefore(css, document.body.firstChild);
+        }
+        document.body.style.transition = 'all 1s ease 0s', preparationsDone = 1;
+        l = function() { return Math.floor(Math.random()*255); };
+        a = function() { 
+            document.body.style.backgroundColor = 'rgb(' + [l(),l(),l()].join(',') + ')';
+        };
+    }
+    if (action) {
+        clearInterval(action);
+        action = 0;
+    }
+    else {
+        a(), action = setInterval(a, 1500);
+    }
+}</textarea>
+            </div>
+            <label class="control-label" for="inputBKMRKTitle">Enter your bookmark's title</label>
+            <div class="controls">
+                <input type="text" id="inputBKMRKTitle" placeholder="Title" />
+            </div>
+            <label class="control-label" for="bookmarklet">Drag it onto your bookmark-toolbar</label>
+            <div class="controls centered"> 
+                <a id="bookmarklet" class="btn btn-danger" type="button">Title</a>
+            </div>
+            <p>Keep in mind that generated bookmarklet itself able to alert you about all errors except syntax errors (they will be logged to your browser's console), so check your code twice if you don't wanna have a "dead" bookmarklet :)</p>
+        </div>
+    </form>
+    <script src="js/codemirror.js"></script>
+    <script src="js/matchbrackets.js"></script>
+    <script src="js/javascript.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/my.js"></script>
+    <script src="js/Packer.js"></script>
+    <script src="js/main.js"></script>
+    </div>
+</body>

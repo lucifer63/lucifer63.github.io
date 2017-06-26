@@ -1,0 +1,100 @@
+body {
+    background-color: #ccffaa;
+    min-width: 300px;
+}
+.container {
+    width: auto;
+}
+.CodeMirror {
+    border: 1px solid #eee;
+    height: auto;
+    width: 94.5%;
+}
+.CodeMirror-scroll {
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+div.container {
+    padding: 5% 10%;
+}
+div.controls, p, label {
+    margin-top: 20px;
+}
+p {
+    padding: 0 0 0 5px;
+}
+.form-horizontal .control-label {        
+    padding-right: 10px;
+    width: 225px;
+}
+@media screen and (max-width: 1200px) {
+    .form-horizontal .control-label {
+        margin-top: 0;
+    }
+    .form-horizontal .control-label:first-child {
+        float: none;
+        text-align: center;
+    }
+    .form-horizontal .control-label:first-child + div {
+        margin: 20px auto;
+    }
+    .CodeMirror {
+        width: 100% !important;
+    }
+    label[for="bookmarklet"] {
+        margin-top: 20px !important;
+    }
+    p {
+        padding: 0;
+    }
+}
+@media screen and (max-width: 770px) {
+    p {
+        text-align: justify;
+    }
+    div.container {
+        padding: 2% 5%;
+    }    
+    label {
+        float: none !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    .controls {       
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+    #inputBKMRKTitle {
+        width: 60%; 
+        display: block;
+        margin: 0 auto;
+    }
+    .centered {
+        text-align: center;
+    }
+}
+@media screen and (max-width: 400px) {
+    body {
+        padding: 9px;
+    }
+    p {
+        margin-bottom: 0; 
+        padding: 10px 10px 0 5px;
+    }
+    .form-horizontal {
+        padding: 0;
+        margin: 15px 0 0;
+    }
+    div.controls, p, label {
+        margin-top: 10px;
+    }
+    .form-horizontal .control-group {
+        margin-bottom: 0;
+    }
+    #inputBKMRKTitle {
+        width: 96%;
+    }
+    div.container {
+        padding: 0;
+    }
+}
