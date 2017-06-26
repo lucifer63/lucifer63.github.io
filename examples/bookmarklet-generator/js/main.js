@@ -2,6 +2,7 @@ var editor1 = CodeMirror.fromTextArea(document.getElementById("code1"), {
     lineNumbers: true,
     matchBrackets: true,
     lineWrapping: true,
+    viewportMargin: Infinity,
     extraKeys: {
         "Enter": "newlineAndIndentContinueComment"
     }

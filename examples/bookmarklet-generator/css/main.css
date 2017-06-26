@@ -1,7 +1,20 @@
 body {
     background-color: #ccffaa;
     min-width: 300px;
+    box-sizing: border-box;
 }
+* {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+
+#inputBKMRKTitle {
+    box-sizing: content-box;
+}
+
 .container {
     width: auto;
 }
