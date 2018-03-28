@@ -9,7 +9,7 @@
     </tr>
     <tr style="width: 100%;">
         <td style="width: 50%;">
-            <pre style="margin-bottom: 0;"><code><content-image /></code></pre>
+            <pre style="margin-bottom: 0;"><code>&#x3C;content-image /&#x3E;</code></pre>
         </td>
         <td style="width: 50%;">
             <pre style="margin-bottom: 0;"><code>&#x3C;image_block rel=&#x22;image&#x22;&#x3E;
@@ -19,7 +19,7 @@
     </tr>
     <tr style="width: 100%;">
         <td style="width: 50%;">
-            <pre style="margin-bottom: 0;"><code><content-image>Description</content-image></code></pre>
+            <pre style="margin-bottom: 0;"><code>&#x3C;content-image&#x3E;Description&#x3C;/content-image&#x3E;</code></pre>
         </td>
         <td style="width: 50%;">
             <pre style="margin-bottom: 0;"><code>&#x3C;image_block rel=&#x22;image&#x22;&#x3E;
