@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Замер серверов</title>
+<style>
+  :root {
+    --bg: #f6f5f1; --card: #ffffff; --text: #1d1d1b; --muted: #6b6a66; --line: #dcdad3;
+    --accent: #1f5fbf; --ok: #1f7a3a; --bad: #b3261e; --warn: #9a6400;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161614; --card: #1f1f1c; --text: #ecebe6; --muted: #a09e97; --line: #36352f;
+      --accent: #7fb0ff; --ok: #6fcf8a; --bad: #ff8a80; --warn: #f0b95a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 20px 16px 48px; }
+  h1 { font-size: 24px; margin: 0 0 8px; }
+  h2 { font-size: 17px; margin: 0 0 8px; }
+  p { margin: 0 0 10px; }
+  .muted { color: var(--muted); font-size: 14px; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+            padding: 14px; margin-top: 14px; }
+  label { display: block; margin: 10px 0 4px; font-size: 14px; color: var(--muted); }
+  input[type=text] { width: 100%; padding: 10px; font: inherit; color: inherit;
+                     background: var(--bg); border: 1px solid var(--line); border-radius: 8px; }
+  .choice { display: flex; flex-wrap: wrap; gap: 8px; }
+  .choice label { margin: 0; color: var(--text); font-size: 15px; padding: 8px 12px;
+                  border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
+  .choice input { margin-right: 6px; }
+  button { font: inherit; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--accent);
+           background: var(--accent); color: #fff; cursor: pointer; }
+  @media (prefers-color-scheme: dark) { button { color: #10151f; } }
+  button.second { background: transparent; color: var(--accent); }
+  button:disabled { opacity: .5; cursor: default; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  a { color: var(--accent); }
+  .server { border-top: 1px solid var(--line); padding: 10px 0; }
+  .server:first-child { border-top: 0; }
+  .server b { display: block; }
+  .where { display: block; font-size: 13px; word-break: break-all; }
+  .verdict { font-weight: 600; }
+  .ok { color: var(--ok); } .bad { color: var(--bad); } .warn { color: var(--warn); }
+  textarea { width: 100%; min-height: 150px; margin-top: 10px; padding: 10px; color: inherit;
+             font: 13px/1.4 ui-monospace, Consolas, monospace;
+             background: var(--bg); border: 1px solid var(--line); border-radius: 8px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Замер серверов</h1>
+  <p>Страница проверяет связь с несколькими серверами и показывает, до каких она доходит без помех.</p>
+  <p class="muted">Расход — несколько мегабайт. Ничего не устанавливается. О вас страница ничего не собирает: результат вы пересылаете сами.</p>
+
+  <section id="controlBox">
+    <h2>Проверка оператора</h2>
+    <p>Откройте <a href="https://hyperion-cs.github.io/dpi-checkers/ru/tcp-16-20/" target="_blank" rel="noopener">проверку оператора</a> в новой вкладке, нажмите «Start» и подождите минуту.</p>
+    <p class="muted">Смотрите столбец «TCP 16-20» в строках Hetzner, OVH, Vultr, DigitalOcean, Scaleway. Везде «No ✅» — оператор не режет. Есть другие отметки — режет.</p>
+    <div class="choice" id="control">
+      <label><input type="radio" name="control" value="режет">Режет</label>
+      <label><input type="radio" name="control" value="не режет">Не режет</label>
+      <label><input type="radio" name="control" value="не проверял" checked>Не проверял</label>
+    </div>
+  </section>
+
+  <section>
+    <h2>Откуда меряем</h2>
+    <label for="operator">Оператор интернета</label>
+    <input type="text" id="operator" placeholder="например: МТС, Ростелеком, Билайн" autocomplete="off">
+    <label for="city">Город</label>
+    <input type="text" id="city" placeholder="например: Москва" autocomplete="off">
+    <label>Подключение</label>
+    <div class="choice" id="link">
+      <label><input type="radio" name="link" value="Wi-Fi или провод" checked>Wi-Fi или провод</label>
+      <label><input type="radio" name="link" value="мобильный">Мобильный интернет</label>
+    </div>
+  </section>
+
+  <section>
+    <h2>Замер</h2>
+    <p class="muted" id="status">Загружаю список серверов…</p>
+    <div class="row"><button id="start" disabled>Начать замер</button></div>
+    <div id="servers"></div>
+  </section>
+
+  <section id="result" hidden>
+    <h2>Результат</h2>
+    <p>Отправьте этот текст тому, кто дал вам ссылку.</p>
+    <div class="row">
+      <button id="share" hidden>Поделиться</button>
+      <button id="copy" class="second">Скопировать</button>
+    </div>
+    <textarea id="report" readonly></textarea>
+    <p class="muted" id="copied" hidden>Скопировано.</p>
+  </section>
+</main>
+
+<script>
+"use strict";
+
+const ATTEMPTS = { ping: 3, img: 3 };
+const STALL_MS = 8000;                                  // столько нет новых данных — соединение встало
+const LIMIT_MS = { ping: 8000, img: 30000, big: 60000 };  // потолок на одно скачивание
+const FILES = { ping: "t/ping.txt", img: "t/500k.bin", big: "t/2m.bin" };
+// Чужие точки: ответ прочитать нельзя, поэтому шлём в соединение больше порога заморозки
+// и смотрим, ответит ли сервер. Приём и числа — как в открытой проверке dpi-checkers.
+const PUSH_BYTES = 64 * 1024;
+const URI_BYTES = 7 * 1024;
+const PUSH_LIMIT_MS = 12000;
+const PINGS = 3;
+
+const $ = (id) => document.getElementById(id);
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+let targets = [];
+
+// Одно скачивание. Возвращает, дошло ли целиком, сколько байт пришло и за какое время.
+// state: stall — данные перестали идти; limit — не уложилось в потолок;
+//        noconn — соединения нет; broken — оборвалось; http — сервер ответил ошибкой.
+async function download(base, kind) {
+  const url = base.replace(/\/+$/, "") + "/" + FILES[kind] + "?r=" + Math.random().toString(36).slice(2);
+  const ctl = new AbortController();
+  const t0 = performance.now();
+  let bytes = 0, ttfb = null, reason = null, stallTimer;
+  const arm = () => {
+    clearTimeout(stallTimer);
+    stallTimer = setTimeout(() => { reason = reason || "stall"; ctl.abort(); }, STALL_MS);
+  };
+  const limitTimer = setTimeout(() => { reason = reason || "limit"; ctl.abort(); }, LIMIT_MS[kind]);
+  try {
+    arm();
+    const resp = await fetch(url, { cache: "no-store", signal: ctl.signal });
+    ttfb = performance.now() - t0;
+    if (!resp.ok) return { ok: false, state: "http", bytes, ttfb, time: ttfb };
+    if (resp.body && resp.body.getReader) {
+      const reader = resp.body.getReader();
+      for (;;) {
+        arm();
+        const { done, value } = await reader.read();
+        if (done) break;
+        bytes += value.length;
+      }
+    } else {
+      bytes = (await resp.arrayBuffer()).byteLength;
+    }
+    return { ok: true, bytes, ttfb, time: performance.now() - t0 };
+  } catch (e) {
+    const state = reason || (ttfb === null ? "noconn" : "broken");
+    return { ok: false, state, bytes, ttfb, time: performance.now() - t0 };
+  } finally {
+    clearTimeout(stallTimer);
+    clearTimeout(limitTimer);
+  }
+}
+
+async function measure(target, say) {
+  const r = { name: target.name, ping: [], img: [], big: null };
+  say("проверяю связь");
+  for (let i = 0; i < ATTEMPTS.ping; i++) r.ping.push(await download(target.base, "ping"));
+  if (!r.ping.some((p) => p.ok)) return r;
+  for (let i = 0; i < ATTEMPTS.img; i++) {
+    say("файл 500 КБ, попытка " + (i + 1) + " из " + ATTEMPTS.img);
+    r.img.push(await download(target.base, "img"));
+  }
+  if (r.img.some((x) => x.ok)) {
+    say("файл 2 МБ");
+    r.big = await download(target.base, "big");
+  }
+  return r;
+}
+
+// Запрос к чужой точке без чтения ответа.
+// ok — сервер ответил; timeout — ответа нет; error — соединение не состоялось.
+async function knock(url, method, body, ctl) {
+  const t0 = performance.now();
+  try {
+    await fetch(url + (url.includes("?") ? "&" : "?") + "t=" + Math.random(), {
+      method, body, mode: "no-cors", credentials: "omit", cache: "no-store",
+      referrer: "", signal: ctl.signal,
+    });
+    return { state: "ok", time: performance.now() - t0 };
+  } catch (e) {
+    return { state: e.name === "AbortError" ? "timeout" : "error", time: performance.now() - t0 };
+  }
+}
+
+async function within(ms, job) {
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), ms);
+  try { return await job(ctl); } finally { clearTimeout(timer); }
+}
+
+function junk(n) {
+  const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  let s = "";
+  for (let i = 0; i < n; i++) s += chars[Math.floor(Math.random() * chars.length)];
+  return s;
+}
+
+// Чужая точка. Способ отключается полем post или series в списке, если сервер точки для него не годится.
+async function probe(target, say) {
+  const r = { name: target.name, control: !!target.control, point: true };
+  say("проверяю связь");
+  r.alive = await within(PUSH_LIMIT_MS, (c) => knock(target.url, "HEAD", undefined, c));
+  if (r.alive.state !== "ok") return r;
+  // Первый запрос включает установку соединения. Ещё несколько пустых по тому же соединению:
+  // наименьшее время — чистая задержка до сервера.
+  say("меряю отклик");
+  const pings = [];
+  for (let i = 0; i < PINGS; i++) {
+    const p = await within(PUSH_LIMIT_MS, (c) => knock(target.url, "HEAD", undefined, c));
+    if (p.state === "ok") pings.push(p.time);
+  }
+  if (pings.length) r.rtt = Math.min(...pings);
+  if (target.post !== false) {
+    say("отправка 64 КБ");
+    const body = crypto.getRandomValues(new Uint8Array(PUSH_BYTES));
+    r.post = await within(PUSH_LIMIT_MS, (c) => knock(target.url, "POST", body, c));
+    if (r.post.state === "timeout") return r;
+  }
+  if (target.series !== false) {
+    say("серия запросов");
+    r.series = await within(PUSH_LIMIT_MS, async (c) => {
+      let last;
+      for (let i = 0; i < Math.ceil(PUSH_BYTES / URI_BYTES); i++) {
+        last = await knock(target.url + (target.url.includes("?") ? "&" : "?") + "x=" + junk(URI_BYTES), "HEAD", undefined, c);
+        if (last.state !== "ok") break;
+      }
+      return last;
+    });
+  }
+  return r;
+}
+
+function summarizePoint(r) {
+  if (r.alive.state !== "ok") {
+    return { verdict: "НЕТ СВЯЗИ", cls: "bad", parts: [r.alive.state === "timeout" ? "нет ответа" : "нет соединения"] };
+  }
+  const word = { ok: "прошла", timeout: "встала", error: "ошибка" };
+  const parts = ["соединение " + Math.round(r.alive.time) + " мс"];
+  if (r.rtt !== undefined) parts.push("отклик " + Math.round(r.rtt) + " мс");
+  if (r.post) parts.push("отправка 64 КБ: " + word[r.post.state]);
+  if (r.series) parts.push("серия запросов: " + word[r.series.state]);
+  const states = [r.post, r.series].filter(Boolean).map((x) => x.state);
+  if (states.includes("timeout")) return { verdict: "РЕЖУТ", cls: "bad", parts };
+  if (states.includes("ok")) return { verdict: "НЕ РЕЖУТ", cls: "ok", parts };
+  return { verdict: "НЕЯСНО", cls: "warn", parts };
+}
+
+// Точка, которая не прошла, проверяется второй раз: заморозка повторяется, случайный сбой — нет.
+async function probeTwice(target, say) {
+  const first = summarizePoint(await probe(target, say));
+  if (first.verdict === "НЕ РЕЖУТ") return first;
+  await sleep(2000);
+  const second = summarizePoint(await probe(target, (text) => say("повтор: " + text)));
+  if (second.verdict === first.verdict) {
+    first.parts.push("повтор: то же");
+    return first;
+  }
+  return {
+    verdict: "НЕСТАБИЛЬНО", cls: "warn",
+    parts: ["1-й раз " + first.verdict + " (" + first.parts.join("; ") + ")",
+            "2-й раз " + second.verdict + " (" + second.parts.join("; ") + ")"],
+  };
+}
+
+const kb = (b) => Math.round(b / 1024);
+const num = (x, d) => x.toFixed(d).replace(".", ",");
+const median = (a) => { const s = a.slice().sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
+
+function why(x) {
+  if (x.state === "noconn") return "нет соединения";
+  if (x.state === "http") return "ошибка сервера";
+  if (x.state === "limit") return "не успел, " + kb(x.bytes) + " КБ";
+  return x.ttfb === null ? "нет ответа" : "встал на " + kb(x.bytes) + " КБ";
+}
+
+// Сводка по одному серверу: итог словом, класс для цвета и строки подробностей.
+function summarize(r) {
+  const pings = r.ping.filter((p) => p.ok).map((p) => p.time);
+  if (!pings.length) return { verdict: "НЕТ СВЯЗИ", cls: "bad", parts: [why(r.ping[0])] };
+  const parts = ["отклик " + Math.round(Math.min(...pings)) + " мс"];
+  const good = r.img.filter((x) => x.ok);
+  const fails = r.img.filter((x) => !x.ok);
+  let img = "500 КБ: " + good.length + "/" + r.img.length;
+  if (good.length) img += ", " + num(median(good.map((x) => x.time)) / 1000, 2) + " с";
+  if (fails.length) img += " (" + fails.map(why).join("; ") + ")";
+  parts.push(img);
+  if (r.big) {
+    parts.push("2 МБ: " + (r.big.ok
+      ? num(r.big.bytes * 8 / 1e6 / (r.big.time / 1000), 1) + " Мбит/с"
+      : why(r.big)));
+  }
+  let verdict, cls;
+  if (!fails.length && (!r.big || r.big.ok)) { verdict = "ПРОШЁЛ"; cls = "ok"; }
+  else if (!good.length) { verdict = "НЕ ПРОШЁЛ"; cls = "bad"; }
+  else { verdict = "НЕСТАБИЛЬНО"; cls = "warn"; }
+  return { verdict, cls, parts };
+}
+
+function picked(name) {
+  const el = document.querySelector('input[name="' + name + '"]:checked');
+  return el ? el.value : "";
+}
+
+function stamp() {
+  const d = new Date(), p = (n) => String(n).padStart(2, "0");
+  const off = -d.getTimezoneOffset() / 60;
+  return p(d.getDate()) + "." + p(d.getMonth() + 1) + "." + d.getFullYear() + " " +
+         p(d.getHours()) + ":" + p(d.getMinutes()) + " (UTC" + (off >= 0 ? "+" : "") + off + ")";
+}
+
+function buildReport(rows) {
+  const controls = rows.filter((s) => s.control);
+  const control = controls.length
+    ? "режут " + controls.filter((s) => s.verdict === "РЕЖУТ").length + " из " + controls.length + " контрольных"
+    : picked("control");
+  const head = [
+    "ЗАМЕР " + stamp(),
+    "Оператор: " + ($("operator").value.trim() || "не указан") +
+      "; подключение: " + picked("link") +
+      "; город: " + ($("city").value.trim() || "не указан") +
+      "; контроль: " + control,
+    "Страница открыта с: " + location.host,
+  ];
+  const body = rows.map((s, i) =>
+    (i + 1) + ". " + s.name + " [" + s.where + "] — " + s.verdict + "; " + s.parts.join("; "));
+  return head.concat(body).join("\n");
+}
+
+function remember(save) {
+  try {
+    if (save) {
+      localStorage.setItem("measure", JSON.stringify({ o: $("operator").value, c: $("city").value }));
+    } else {
+      const v = JSON.parse(localStorage.getItem("measure") || "{}");
+      if (v.o) $("operator").value = v.o;
+      if (v.c) $("city").value = v.c;
+    }
+  } catch (e) { /* хранилище недоступно — поля просто пустые */ }
+}
+
+// Чужие точки проверяются по нескольку сразу; свои серверы — по одному: там меряется время.
+const PARALLEL = 6;
+
+function hostOf(t) {
+  try { return new URL(t.url || t.base).host; } catch (e) { return ""; }
+}
+
+async function run() {
+  $("start").disabled = true;
+  $("result").hidden = true;
+  $("servers").textContent = "";
+  remember(true);
+  const rows = new Array(targets.length);
+  let done = 0;
+  const boxes = targets.map((t) => {
+    const box = document.createElement("div");
+    box.className = "server";
+    const title = document.createElement("b");
+    title.textContent = t.name;
+    const where = document.createElement("span");
+    where.className = "muted where";
+    where.textContent = [hostOf(t), t.asn, t.kind].filter(Boolean).join(" · ");
+    const line = document.createElement("span");
+    line.className = "muted";
+    line.textContent = "ждёт очереди";
+    box.append(title, where, line);
+    $("servers").append(box);
+    return { box, line };
+  });
+  const one = async (i) => {
+    const t = targets[i], box = boxes[i].box, line = boxes[i].line;
+    const say = (text) => { line.textContent = text + "…"; };
+    const s = t.url ? await probeTwice(t, say) : summarize(await measure(t, say));
+    s.name = t.name;
+    s.control = !!t.control;
+    s.where = [hostOf(t), t.asn].filter(Boolean).join(", ");
+    rows[i] = s;
+    const v = document.createElement("span");
+    v.className = "verdict " + s.cls;
+    v.textContent = s.verdict;
+    line.textContent = " — " + s.parts.join("; ");
+    box.insertBefore(v, line);
+    done++;
+    $("status").textContent = "Проверено " + done + " из " + targets.length + "…";
+  };
+  const all = targets.map((t, i) => i);
+  const points = all.filter((i) => targets[i].url);
+  $("status").textContent = "Идёт замер…";
+  for (const i of all.filter((i) => !targets[i].url)) await one(i);
+  let next = 0;
+  await Promise.all(Array.from({ length: PARALLEL }, async () => {
+    while (next < points.length) await one(points[next++]);
+  }));
+  $("status").textContent = "Готово. Замер можно повторить.";
+  $("report").value = buildReport(rows);
+  $("result").hidden = false;
+  $("copied").hidden = true;
+  $("start").disabled = false;
+  $("result").scrollIntoView({ behavior: "smooth" });
+}
+
+async function copyReport() {
+  const text = $("report").value;
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (e) {
+    $("report").select();
+    document.execCommand("copy");
+  }
+  $("copied").hidden = false;
+}
+
+async function init() {
+  remember(false);
+  $("start").addEventListener("click", run);
+  $("copy").addEventListener("click", copyReport);
+  if (navigator.share) {
+    $("share").hidden = false;
+    $("share").addEventListener("click", () => navigator.share({ text: $("report").value }).catch(() => {}));
+  }
+  try {
+    const resp = await fetch("targets.json", { cache: "no-store" });
+    targets = await resp.json();
+  } catch (e) {
+    targets = [];
+  }
+  if (!targets.length) {
+    $("status").textContent = "Список серверов не загрузился. Сообщите тому, кто дал вам ссылку.";
+    return;
+  }
+  // Есть контрольные точки — ручная проверка оператора не нужна.
+  $("controlBox").hidden = targets.some((t) => t.control);
+  $("status").textContent = "Точек: " + targets.length + ". Замер займёт около минуты.";
+  $("start").disabled = false;
+}
+
+init();
+</script>
+</body>
+</html>
