@@ -1,0 +1,537 @@
+[
+    {
+        "name":  "timeweb_msk",
+        "base":  "https://129-101-109-91.sslip.io"
+    },
+    {
+        "name":  "Контроль: OVH, Франция",
+        "url":  "https://proof.ovh.net/",
+        "asn":  "AS16276",
+        "kind":  "speedtest хостера",
+        "control":  true,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Контроль: Vultr, Франкфурт",
+        "url":  "https://fra-de-ping.vultr.com/",
+        "asn":  "AS20473",
+        "kind":  "speedtest хостера",
+        "control":  true,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "Контроль: Vultr, Амстердам",
+        "url":  "https://ams-nl-ping.vultr.com/",
+        "asn":  "AS20473",
+        "kind":  "speedtest хостера",
+        "control":  true,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "MivoCloud, Кишинёв",
+        "url":  "https://96d061fdf0b4fda05ae4718c90571779.ip.looking.house/",
+        "asn":  "AS39798",
+        "kind":  "Looking Glass",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Time4VPS, Вильнюс",
+        "url":  "https://lg.time4vps.com/",
+        "asn":  "AS212531",
+        "kind":  "Looking Glass хостера",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "Time4VPS, Вильнюс",
+        "url":  "https://f49ce4bd0b0148184d058c6808f86f4e.ip.looking.house/",
+        "asn":  "AS212531",
+        "kind":  "Looking Glass",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "HostZealot, Нидерланды",
+        "url":  "https://7cd7fc3f65de6c273ac98b82cae41dd7.ip.looking.house/",
+        "asn":  "AS59711",
+        "kind":  "Looking Glass",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "HostZealot, Польша",
+        "url":  "https://afc8df5f3caa0fa4ac08f4b2fa52b717.ip.looking.house/",
+        "asn":  "AS59711",
+        "kind":  "Looking Glass",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Zomro, Нидерланды",
+        "url":  "https://7e729ddceac91fc2b1b3b42e93b4e403.ip.looking.house/",
+        "asn":  "AS211381",
+        "kind":  "Looking Glass",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Zomro, Нидерланды",
+        "url":  "https://5e4ddee5588b376a799b2e86753ba08e.ip.looking.house/",
+        "asn":  "AS204601",
+        "kind":  "Looking Glass",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Zomro, Польша",
+        "url":  "https://c74f218b17ceac14770532a44cba3fc7.ip.looking.house/",
+        "asn":  "AS210895",
+        "kind":  "Looking Glass",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Veesp, Латвия",
+        "url":  "https://a467972d6ca523b7b84c6f5e90e7c564.ip.looking.house/",
+        "asn":  "AS42532",
+        "kind":  "Looking Glass",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "AlexHost, Кишинёв",
+        "url":  "https://261734c0143968b982ce68b445b194d7.ip.looking.house/",
+        "asn":  "AS200019",
+        "kind":  "Looking Glass",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "PS.kz, Казахстан",
+        "url":  "https://130df0e6099037d9e502aca293edba41.ip.looking.house/",
+        "asn":  "AS48716",
+        "kind":  "Looking Glass",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Serverius, Нидерланды",
+        "url":  "https://speedtest1.serverius.net/",
+        "asn":  "AS50673",
+        "kind":  "speedtest дата-центра; Serverius — поставщик связи для is*hosting",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Selectel, Москва",
+        "url":  "https://s3.ru-7.storage.selcloud.ru/",
+        "asn":  "AS50340",
+        "kind":  "хранилище хостера",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Selectel, Санкт-Петербург",
+        "url":  "https://s3.ru-1.storage.selcloud.ru/",
+        "asn":  "AS49505",
+        "kind":  "хранилище хостера",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Рег.облако, Россия",
+        "url":  "https://s3.regru.cloud/",
+        "asn":  "AS197695",
+        "kind":  "хранилище хостера",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "HOSTKEY, Москва",
+        "url":  "https://speedtest.hostkey.ru/",
+        "asn":  "AS50867",
+        "kind":  "speedtest хостера",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "FirstVDS, Россия",
+        "url":  "https://my.firstvds.ru/",
+        "asn":  "AS29182",
+        "kind":  "кабинет хостера",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "AdminVPS, Россия",
+        "url":  "https://my.adminvps.ru/",
+        "asn":  "AS211642",
+        "kind":  "служебный адрес хостера",
+        "control":  false,
+        "post":  true,
+        "series":  false
+    },
+    {
+        "name":  "Hoster.kz, Алматы",
+        "url":  "https://mirror.hoster.kz/",
+        "asn":  "AS202958",
+        "kind":  "зеркало хостера",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "PS.kz, Казахстан",
+        "url":  "https://mirror.ps.kz/",
+        "asn":  "AS48716",
+        "kind":  "зеркало хостера",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Serverspace, Алматы",
+        "url":  "https://my.serverspace.kz/",
+        "asn":  "AS57008",
+        "kind":  "кабинет хостера",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Delta Telecom, Азербайджан",
+        "url":  "https://delta-telecom.net/",
+        "asn":  "AS215148",
+        "kind":  "сайт хостера",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "AzInTelecom, Баку",
+        "url":  "https://azintelecom.az/",
+        "asn":  "AS200729",
+        "kind":  "сайт хостера",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "Netinternet, Турция",
+        "url":  "https://www.netinternet.tr/",
+        "asn":  "AS51559",
+        "kind":  "сайт хостера",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "MivoCloud, Кишинёв",
+        "url":  "https://speedtest.mivocloud.com/",
+        "asn":  "AS39798",
+        "kind":  "speedtest хостера",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "AlexHost, Кишинёв",
+        "url":  "https://alexhost.com/",
+        "asn":  "AS200019",
+        "kind":  "сайт хостера",
+        "control":  false,
+        "post":  true,
+        "series":  false
+    },
+    {
+        "name":  "Hosteam, Польша",
+        "url":  "https://lg.hosteam.pl/",
+        "asn":  "AS51290",
+        "kind":  "Looking Glass хостера",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "UpCloud, Хельсинки",
+        "url":  "https://api.upcloud.com/",
+        "asn":  "AS202053",
+        "kind":  "API хостера",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Zone.ee, Эстония",
+        "url":  "https://www.zone.ee/",
+        "asn":  "AS49604",
+        "kind":  "сайт хостера",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "WaveCom, Эстония",
+        "url":  "https://lg.wavecom.ee/",
+        "asn":  "AS34702",
+        "kind":  "Looking Glass хостера",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "Timeweb, Амстердам",
+        "url":  "https://ping-nl-1.timeweb.cloud/",
+        "asn":  "AS210976",
+        "kind":  "служебный адрес хостера (пинг до дата-центра ams-1)",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Timeweb, Амстердам",
+        "url":  "https://cud.news/",
+        "asn":  "AS210976",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "Timeweb, Амстердам",
+        "url":  "https://3dmasterkit.ru/",
+        "asn":  "AS210976",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "Timeweb, Алматы",
+        "url":  "https://ping-kz-1.timeweb.cloud/",
+        "asn":  "AS9123",
+        "kind":  "служебный адрес хостера (пинг до дата-центра ala-1)",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Timeweb, Алматы",
+        "url":  "https://1.kz/",
+        "asn":  "AS9123",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  true,
+        "series":  false
+    },
+    {
+        "name":  "Timeweb, Алматы",
+        "url":  "https://clp.kz/",
+        "asn":  "AS9123",
+        "kind":  "сайт клиента, другая подсеть",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "Timeweb, Франкфурт",
+        "url":  "https://staroe-zerkalo.ru/",
+        "asn":  "AS210976",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Timeweb, Франкфурт",
+        "url":  "https://profprime.ru/",
+        "asn":  "AS210976",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Timeweb, Москва",
+        "url":  "https://ping-ru-3.timeweb.cloud/",
+        "asn":  "AS9123",
+        "kind":  "служебный адрес хостера (пинг до дата-центра msk-1)",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "Timeweb, Санкт-Петербург",
+        "url":  "https://ping-ru-1.timeweb.cloud/",
+        "asn":  "AS9123",
+        "kind":  "служебный адрес хостера (пинг до дата-центра spb-3)",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "VDSina, Амстердам",
+        "url":  "https://thematdev.org/",
+        "asn":  "AS216071",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "VDSina, Амстердам",
+        "url":  "https://svn.vdsina.ru/",
+        "asn":  "AS216071",
+        "kind":  "служебный адрес хостера",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "VDSina, Амстердам",
+        "url":  "https://bigint.ru/",
+        "asn":  "AS216071",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "VDSina, Москва",
+        "url":  "https://speedtestru.vdsina.ru/",
+        "asn":  "AS48282",
+        "kind":  "speedtest хостера",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "RUVDS, Амстердам",
+        "url":  "https://vp.ag/",
+        "asn":  "AS48207",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "RUVDS, Амстердам",
+        "url":  "https://recruitit.ru/",
+        "asn":  "AS48207",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "RUVDS, Франкфурт",
+        "url":  "https://elmore.ru/",
+        "asn":  "AS48207",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "RUVDS, Франкфурт",
+        "url":  "https://georadar-loza.ru/",
+        "asn":  "AS48207",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "RUVDS, Москва",
+        "url":  "https://pavelveter.com/",
+        "asn":  "AS214822",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "FirstByte, Амстердам",
+        "url":  "https://scyld.org/",
+        "asn":  "AS200740",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  false,
+        "series":  true
+    },
+    {
+        "name":  "FirstByte, Амстердам",
+        "url":  "https://lim.rus.net/",
+        "asn":  "AS200740",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "FirstByte, Амстердам",
+        "url":  "https://cpwr.ru/",
+        "asn":  "AS200740",
+        "kind":  "сайт клиента",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "AdminVPS, Амстердам",
+        "url":  "https://izem.ru/",
+        "asn":  "AS57043",
+        "kind":  "сайт клиента; сеть HOSTKEY B.V.",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "AdminVPS, Амстердам",
+        "url":  "https://muzoperator.ru/",
+        "asn":  "AS57043",
+        "kind":  "сайт клиента; сеть HOSTKEY B.V.",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "is*hosting, Нидерланды",
+        "url":  "https://action-magazine.ru/",
+        "asn":  "AS58061",
+        "kind":  "сайт клиента; сеть Scalaxy B.V.",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    },
+    {
+        "name":  "is*hosting, Нидерланды",
+        "url":  "https://uulu.ru/",
+        "asn":  "AS58061",
+        "kind":  "сайт клиента; сеть Scalaxy B.V.",
+        "control":  false,
+        "post":  true,
+        "series":  true
+    }
+]
